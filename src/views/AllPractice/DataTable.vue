@@ -1,149 +1,107 @@
 <template>
-  <div class="q-pa-md">
-    <q-table
-      flat bordered
-      :rows="rows"
-      :columns="columns"
-      row-key="name"
-      :selected-rows-label="getSelectedString"
-      selection="multiple"
-      v-model:selected="selected"
-      rows-per-page-options="0"
-      hide-bottom
-    />
-
-    <div class="q-mt-md">
-      Selected: {{ JSON.stringify(selected) }}
-    </div>
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th v-for="col in columns" :key="col.name">{{ col.label }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="row in rows" :key="row.problemName">
+        <td><input type="checkbox"></td>
+        <td @click="handleStar(row)">
+          <i v-if="row.star === 1" class="bi bi-star-fill"></i>
+          <i v-else class="bi bi-star"></i>
+        </td>
+        <td class="col-problem">{{ row.problemName }}</td>
+        <td>{{ difficultyMapping[row.difficulty] }}</td>
+        <td>{{ row.finishedDate}}</td>
+        <td>{{ row.code }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t } = useI18n() 
 
-const columns = [
-  {
-    name: 'desc',
-    required: true,
-    label: 'Dessert (100g serving)',
-    align: 'left',
-    field: row => row.name,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'calories', align: 'center', label: 'Calories', field: 'calories', sortable: true },
-  { name: 'fat', label: 'Fat (g)', field: 'fat', sortable: true },
-  { name: 'carbs', label: 'Carbs (g)', field: 'carbs' }
-]
-
-const rows = [
-  {
-    name: 'Frozen Yogurt',
-    calories: 159,
-    fat: 6.0,
-    carbs: 24,
-    protein: 4.0,
-    sodium: 87,
-    calcium: '14%',
-    iron: '1%'
-  },
-  {
-    name: 'Ice cream sandwich',
-    calories: 237,
-    fat: 9.0,
-    carbs: 37,
-    protein: 4.3,
-    sodium: 129,
-    calcium: '8%',
-    iron: '1%'
-  },
-  {
-    name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
-    carbs: 23,
-    protein: 6.0,
-    sodium: 337,
-    calcium: '6%',
-    iron: '7%'
-  },
-  {
-    name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
-    carbs: 67,
-    protein: 4.3,
-    sodium: 413,
-    calcium: '3%',
-    iron: '8%'
-  },
-  {
-    name: 'Gingerbread',
-    calories: 356,
-    fat: 16.0,
-    carbs: 49,
-    protein: 3.9,
-    sodium: 327,
-    calcium: '7%',
-    iron: '16%'
-  },
-  {
-    name: 'Jelly bean',
-    calories: 375,
-    fat: 0.0,
-    carbs: 94,
-    protein: 0.0,
-    sodium: 50,
-    calcium: '0%',
-    iron: '0%'
-  },
-  {
-    name: 'Lollipop',
-    calories: 392,
-    fat: 0.2,
-    carbs: 98,
-    protein: 0,
-    sodium: 38,
-    calcium: '0%',
-    iron: '2%'
-  },
-  {
-    name: 'Honeycomb',
-    calories: 408,
-    fat: 3.2,
-    carbs: 87,
-    protein: 6.5,
-    sodium: 562,
-    calcium: '0%',
-    iron: '45%'
-  },
-  {
-    name: 'Donut',
-    calories: 452,
-    fat: 25.0,
-    carbs: 51,
-    protein: 4.9,
-    sodium: 326,
-    calcium: '2%',
-    iron: '22%'
-  },
-  {
-    name: 'KitKat',
-    calories: 518,
-    fat: 26.0,
-    carbs: 65,
-    protein: 7,
-    sodium: 54,
-    calcium: '12%',
-    iron: '6%'
-  }
-]
-
-const selected = ref([])
-
-const getSelectedString = () => {
-  return selected.value.length === 0
-    ? ''
-    : `${selected.value.length} record${selected.value.length > 1 ? 's' : ''} selected of ${rows.length}`
+const difficultyMapping = {
+  1: t('easy'),
+  2: t('medium'),
+  3: t('hard')
 }
+const columns = [
+  { name: 'status', label: t('status') },
+  { name: 'star', label: t('star') },
+  { name: 'problem', label: t('problems') },
+  { name: 'difficulty', label: t('difficulty') },
+  { name: 'finishedDate', label: t('finishedDate') },
+  { name: 'code', label: t('code') }
+]
+const handleStar = (row) => {
+  row.star = row.star === 1 ? 0 : 1
+}
+
+const rows = ref([
+  {
+    problemName: 'Contains Duplicate',
+    problemLinkCN: 'https://leetcode.cn/problems/contains-duplicate/',
+    problemLinkEN: 'https://leetcode.com/problems/contains-duplicate/',
+    difficulty: '1',
+    finishedDate: '1',
+    star: '0'
+  },
+  {
+    problemName: 'Contains Duplicate1',
+    problemLinkCN: 'https://leetcode.cn/problems/contains-duplicate/',
+    problemLinkEN: 'https://leetcode.com/problems/contains-duplicate/',
+    difficulty: '1',
+    finishedDate: '1',
+    star: '1'
+  },
+])
+watch(rows, () => {
+  console.log(rows.value)
+},
+{deep: true})
 </script>
+
+<style lang="less" scoped>
+table {
+  width: 100%;
+  border-radius: 6px;
+  padding: 8px;
+  border-collapse: collapse; 
+  border-spacing: 0 5px;
+  input {
+    vertical-align: middle;  
+    height: 20px;
+    width: 20px;
+  }
+  thead {
+    height: 40px;
+    border-bottom: 2px solid #eeeeee;
+    :nth-child(3) {
+      text-align: left;
+    }
+  }
+  tbody {
+    tr { 
+      height: 40px;
+      border-bottom: 1px solid #eeeeee;
+    }
+    tr:hover {
+      background-color: #eeeeee;
+      transition: all 0.2s;
+    }
+    .col-problem {
+      text-align: left;
+    }
+    .bi {
+      color: #ffe600;
+    }
+  }
+}
+
+</style>

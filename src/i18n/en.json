@@ -6,5 +6,15 @@
   "NeetCode150": "NeetCode 150",
   "NeetCodeAll": "NeetCode All",
 
+  "status": "Status",
+  "problems": "Problems",
+  "difficulty": "Difficulty",
+  "easy": "Easy",
+  "medium": "Medium",
+  "hard": "Hard",
+  "star": "Star",
+  "code": "Code",
+  "finishedDate": "Finished Date",
+
   "footerMessage": "@2023 Yanlong Sun"
 }
