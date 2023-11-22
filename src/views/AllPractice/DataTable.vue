@@ -81,7 +81,7 @@ table {
   }
   thead {
     height: 40px;
-    border-bottom: 2px solid #eeeeee;
+    border-bottom: 2px solid var(--accent-color);
     :nth-child(3) {
       text-align: left;
     }
@@ -89,10 +89,10 @@ table {
   tbody {
     tr { 
       height: 40px;
-      border-bottom: 1px solid #eeeeee;
+      border-bottom: 1px solid var(--accent-color);
     }
     tr:hover {
-      background-color: #eeeeee;
+      background-color: var(--accent-color);
       transition: all 0.2s;
     }
     .col-problem {
