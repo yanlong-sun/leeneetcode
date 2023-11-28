@@ -93,23 +93,26 @@ watch(curTheme, () => {
   console.log(curTheme.value)
 })
 
-
 const color = 'red'
 const trackColor = 'green'
 </script>
 <style lang="less" scoped>
-.card {
-  width: 100%;
+.q-pa-md {
+  padding: 16px 0;
   .qtabs {
-    background-color: var(--background-color-secondary);
+    background-color: var(--background-color-secondary) !important;
     color: var(--text-primary-color);
+    transition: none;
+  }
+  hr {
+    background-color: var(--accent-color);
   }
   .tab {
     display: flex;
     align-items: center;
   }
   .tabPanel {
-    height: 80vh;
+    min-height: 80vh;
     background-color: var(--background-color-secondary);
     color: var(--text-primary-color);
   }
