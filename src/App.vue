@@ -10,7 +10,17 @@ import PageFooter from '@/views/PageFooter/PageFooter.vue'
 import { useStore } from 'vuex'
 
 const store = useStore()
-store.dispatch('getCurThemeAndSet', 'light')
+const setColorScheme = (isLight) => {
+  const colorScheme = isLight ? 'light' : 'dark'
+  store.dispatch('getCurThemeAndSet', colorScheme)
+  document.documentElement.className = colorScheme
+}
+const isLight = window.matchMedia('(prefers-color-scheme:light)')
+setColorScheme(isLight.matches)
+isLight.addEventListener('change', (matcheLight) => {
+  console.log(matcheLight.matches)
+  setColorScheme(matcheLight.matches)
+})
 </script>
 
 <style>

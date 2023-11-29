@@ -14,16 +14,27 @@
         ></div>
       </label>
     </div>
+    <q-btn-toggle
+      v-model="curLang"
+      no-caps
+      unelevated
+      dense
+      toggle-color="grey"
+      :options="[
+        { label: '中', value: 'cn' },
+        { label: 'En', value: 'en' }
+      ]"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
 const store = useStore()
-
 const router = useRouter()
 const handleGoHome = () => {
   router.replace('/')
@@ -46,6 +57,13 @@ const setTheme = (theme) => {
   curTheme.value = theme
   document.documentElement.className = theme
 }
+
+// lang
+const { locale } = useI18n()
+const curLang = ref(locale.value)
+watch(curLang, (newLang) => {
+  locale.value = newLang
+})
 </script>
 
 <style lang="less" scoped>
