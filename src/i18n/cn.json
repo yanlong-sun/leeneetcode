@@ -1,4 +1,20 @@
 {
   "allPractice": "所有练习",
-  "todoList": "今日事项"
+  "todoList": "待办列表",
+
+  "blind75": "Blind 75",
+  "NeetCode150": "NeetCode 150",
+  "NeetCodeAll": "NeetCode All",
+
+  "status": "状态",
+  "problems": "问题",
+  "difficulty": "难度",
+  "easy": "简单",
+  "medium": "中等",
+  "hard": "困难",
+  "star": "收藏",
+  "code": "代码",
+  "finishedDate": "完成日期",
+
+  "footerMessage": "{'@'}2023 Yanlong Sun"
 }

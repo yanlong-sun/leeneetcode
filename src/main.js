@@ -6,10 +6,9 @@ import store from '@/store'
 import { Quasar } from 'quasar'
 import quasarUserOptions from './quasar-user-options'
 
-
 createApp(App)
   .use(Quasar, quasarUserOptions)
-  .use(store)
-  .use(i18n)
   .use(router)
+  .use(i18n)
+  .use(store)
   .mount('#app')

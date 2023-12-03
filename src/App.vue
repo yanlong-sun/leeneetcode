@@ -18,7 +18,6 @@ const setColorScheme = (isLight) => {
 const isLight = window.matchMedia('(prefers-color-scheme:light)')
 setColorScheme(isLight.matches)
 isLight.addEventListener('change', (matcheLight) => {
-  console.log(matcheLight.matches)
   setColorScheme(matcheLight.matches)
 })
 </script>

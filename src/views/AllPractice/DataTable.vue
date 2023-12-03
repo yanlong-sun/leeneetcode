@@ -13,7 +13,7 @@
           <i v-else class="bi bi-star"></i>
         </td>
         <td class="col-problem">{{ row.problemName }}</td>
-        <td>{{ difficultyMapping[row.difficulty] }}</td>
+        <td>{{ row.difficulty }}</td>
         <td>{{ row.finishedDate}}</td>
         <td>{{ row.code }}</td>
       </tr>
@@ -22,30 +22,31 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-const { t } = useI18n() 
+const { t, locale } = useI18n()
 
 const difficultyMapping = {
-  1: t('easy'),
-  2: t('medium'),
-  3: t('hard')
+  1: 'easy',
+  2: 'medium',
+  3: 'hard'
 }
-const columns = [
+const columns = computed(() => [
   { name: 'status', label: t('status') },
   { name: 'star', label: t('star') },
-  { name: 'problem', label: t('problems') },
+  { name: 'problems', label: t('problems') },
   { name: 'difficulty', label: t('difficulty') },
   { name: 'finishedDate', label: t('finishedDate') },
-  { name: 'code', label: t('code') }
-]
+  { name: 'code', label: t('code')}
+])
 const handleStar = (row) => {
   row.star = row.star === 1 ? 0 : 1
 }
 
-const rows = ref([
+const data = [
   {
-    problemName: 'Contains Duplicate',
+    problemNameCN: '重复。。',
+    problemNameEN: 'Contains Duplicate',
     problemLinkCN: 'https://leetcode.cn/problems/contains-duplicate/',
     problemLinkEN: 'https://leetcode.com/problems/contains-duplicate/',
     difficulty: '1',
@@ -53,18 +54,24 @@ const rows = ref([
     star: '0'
   },
   {
-    problemName: 'Contains Duplicate1',
+    problemNameCN: '重复2',
+    problemNameEN: 'Contains Duplicate1',
     problemLinkCN: 'https://leetcode.cn/problems/contains-duplicate/',
     problemLinkEN: 'https://leetcode.com/problems/contains-duplicate/',
-    difficulty: '1',
+    difficulty: '2',
     finishedDate: '1',
     star: '1'
   },
-])
-watch(rows, () => {
-  console.log(rows.value)
-},
-{deep: true})
+]
+const rows = computed(() => data.map(problem => {
+  return {
+    problemName: locale.value === 'cn' ? problem.problemNameCN : problem.problemNameEN,
+    problemLink: locale.value === 'cn' ? problem.problemLinkCN : problem.problemLinkEN,
+    difficulty: t(difficultyMapping[problem.difficulty]),
+    finishedDate: problem.finishedDate,
+    star: problem.star
+  }
+}))
 </script>
 
 <style lang="less" scoped>
